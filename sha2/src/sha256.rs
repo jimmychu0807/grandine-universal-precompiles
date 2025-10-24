@@ -32,7 +32,7 @@ cfg_if::cfg_if! {
         // ref: https://github.com/brevis-network/pico/blob/main/sdk/cli/src/build/build.rs#L82
         mod pico;
         use pico::compress;
-    } else if #[cfg(all(target_os = "zkvm", target_vendor = "risc0", target_arch = "riscv32", not(feature = "zkvm-pico")))] {
+    } else if #[cfg(all(target_os = "zkvm", target_vendor = "risc0", target_arch = "riscv32", feature = "zkvm-risc0"))] {
         // zkvm-r0vm
         mod risc0;
         use risc0::compress;
