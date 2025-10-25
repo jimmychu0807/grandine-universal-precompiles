@@ -195,7 +195,7 @@ impl_binops_additive_specify_output!(G1Affine, G1Projective, G1Projective);
     not(target_os = "zkvm"),
     target_vendor = "succinct",
     target_vendor = "zkm",
-    feature = "zkvm-pico"
+    all(target_vendor = "risc0", feature = "zkvm-pico"),
 ))]
 const B: Fp = Fp::from_raw_unchecked([
     0xaa27_0000_000c_fff3,
@@ -233,7 +233,7 @@ impl G1Affine {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         return G1Affine {
             x: Fp::from_raw_unchecked([
@@ -507,7 +507,14 @@ impl G1Affine {
         }
 
         cfg_if! {
-            if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+            if #[cfg(all(
+                target_os = "zkvm",
+                any(
+                    target_vendor = "succinct",
+                    target_vendor = "zkm",
+                    all(target_vendor = "risc0", feature = "zkvm-pico"),
+                )
+            ))] {
                 // The add precompile only works when P != Q and P != -Q
                 if self.x != rhs.x {
                     // In this case, we know that P != Q and P != -Q, since both Q and -Q have the same `x` coordinate
@@ -577,7 +584,7 @@ impl G1Affine {
     not(target_os = "zkvm"),
     target_vendor = "succinct",
     target_vendor = "zkm",
-    feature = "zkvm-pico"
+    all(target_vendor = "risc0", feature = "zkvm-pico"),
 ))]
 pub const BETA: Fp = Fp::from_raw_unchecked([
     0x30f1_361b_798a_64e8,
@@ -788,7 +795,7 @@ impl G1Projective {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         return G1Projective {
             x: Fp::from_raw_unchecked([
@@ -977,7 +984,7 @@ impl G1Projective {
         #[cfg(any(
             not(target_os = "zkvm"),
             target_vendor = "risc0",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         {
             let mut xself = G1Projective::identity();

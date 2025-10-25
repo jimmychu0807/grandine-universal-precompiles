@@ -151,7 +151,7 @@ const INV: u64 = 0x89f3_fffc_fffc_fffd;
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const R_INV: Fp = Fp([
@@ -186,11 +186,9 @@ const R2: Fp = Fp([
 /// R3 = 2^(384*3) mod p
 #[cfg(any(
     not(target_os = "zkvm"),
-    any(
-        target_vendor = "succinct",
-        target_vendor = "zkm",
-        feature = "zkvm-pico"
-    ),
+    target_vendor = "succinct",
+    target_vendor = "zkm",
+    all(target_vendor = "risc0", feature = "zkvm-pico"),
 ))]
 const R3: Fp = Fp([
     0xed48_ac6b_d94c_a1e0,
@@ -262,11 +260,9 @@ impl Fp {
         // Standard zkcrypto implementation
         #[cfg(any(
             not(target_os = "zkvm"),
-            any(
-                target_vendor = "succinct",
-                target_vendor = "zkm",
-                feature = "zkvm-pico"
-            )
+            target_vendor = "succinct",
+            target_vendor = "zkm",
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         {
             R
@@ -310,11 +306,9 @@ impl Fp {
 
         #[cfg(any(
             not(target_os = "zkvm"),
-            any(
-                target_vendor = "succinct",
-                target_vendor = "zkm",
-                feature = "zkvm-pico"
-            )
+            target_vendor = "succinct",
+            target_vendor = "zkm",
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         {
             // Convert to Montgomery form by computing
@@ -332,11 +326,9 @@ impl Fp {
         // (a.R) / R = a
         #[cfg(any(
             not(target_os = "zkvm"),
-            any(
-                target_vendor = "succinct",
-                target_vendor = "zkm",
-                feature = "zkvm-pico"
-            )
+            target_vendor = "succinct",
+            target_vendor = "zkm",
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         let tmp = Fp::montgomery_reduce(
             self.0[0], self.0[1], self.0[2], self.0[3], self.0[4], self.0[5], 0, 0, 0, 0, 0, 0,
@@ -399,11 +391,9 @@ impl Fp {
         // Convert to Montgomery form
         #[cfg(any(
             not(target_os = "zkvm"),
-            any(
-                target_vendor = "succinct",
-                target_vendor = "zkm",
-                feature = "zkvm-pico"
-            )
+            target_vendor = "succinct",
+            target_vendor = "zkm",
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         return d0 * R2 + d1 * R3;
 
@@ -424,11 +414,9 @@ impl Fp {
         // First, because self is in Montgomery form we need to reduce it
         #[cfg(any(
             not(target_os = "zkvm"),
-            any(
-                target_vendor = "succinct",
-                target_vendor = "zkm",
-                feature = "zkvm-pico"
-            )
+            target_vendor = "succinct",
+            target_vendor = "zkm",
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         let tmp = Fp::montgomery_reduce(
             self.0[0], self.0[1], self.0[2], self.0[3], self.0[4], self.0[5], 0, 0, 0, 0, 0, 0,
@@ -727,7 +715,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn add_inp(&mut self, rhs: &Fp) {
@@ -767,7 +755,7 @@ impl Fp {
             any(
                 target_vendor = "zkm",
                 target_vendor = "succinct",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -834,7 +822,7 @@ impl Fp {
             any(
                 target_vendor = "zkm",
                 target_vendor = "succinct",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -855,7 +843,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn sub_inp(&mut self, rhs: &Fp) {
@@ -892,7 +880,7 @@ impl Fp {
             any(
                 target_vendor = "zkm",
                 target_vendor = "succinct",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -922,7 +910,7 @@ impl Fp {
         any(
             target_vendor = "zkm",
             target_vendor = "succinct",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub(crate) fn sum_of_products<const T: usize>(mut a: [Fp; T], b: [Fp; T]) -> Fp {
@@ -1104,7 +1092,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn mul_inp(&mut self, rhs: &Fp) {
@@ -1188,7 +1176,7 @@ impl Fp {
             any(
                 target_vendor = "zkm",
                 target_vendor = "succinct",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -1213,7 +1201,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub(crate) fn mul_r_inv_internal(&mut self) {
@@ -1234,7 +1222,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub(crate) fn mul_r_internal(&mut self) {
@@ -1249,7 +1237,7 @@ impl Fp {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn square_inp(&mut self) {
@@ -1336,7 +1324,7 @@ impl Fp {
             any(
                 target_vendor = "zkm",
                 target_vendor = "succinct",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {

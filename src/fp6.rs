@@ -116,7 +116,7 @@ impl Fp6 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn add_inp(&mut self, rhs: &Fp6) {
@@ -131,7 +131,7 @@ impl Fp6 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn sub_inp(&mut self, rhs: &Fp6) {
@@ -185,7 +185,7 @@ impl Fp6 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn mul_by_nonresidue_owned(self) -> Self {
@@ -215,7 +215,7 @@ impl Fp6 {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         {
             // c1 = c1 * (u + 1)^((p - 1) / 3)
@@ -289,7 +289,7 @@ impl Fp6 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn frobenius_map_inp(&mut self) {
@@ -496,7 +496,7 @@ impl Fp6 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {

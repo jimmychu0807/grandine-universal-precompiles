@@ -138,7 +138,7 @@ impl Fp12 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -180,7 +180,7 @@ impl Fp12 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn mul_inp(&mut self, other: &Fp12) {
@@ -199,7 +199,15 @@ impl Fp12 {
     #[inline]
     fn mul(&self, other: &Fp12) -> Self {
         cfg_if::cfg_if! {
-            if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+            if #[cfg(all(
+                target_os = "zkvm",
+                any(
+                    target_vendor = "succinct",
+                    target_vendor = "zkm",
+                    all(target_vendor = "risc0", feature = "zkvm-pico"),
+                )
+            ))]
+            {
                 let mut out = self.clone();
                 out.mul_inp(other);
                 out
@@ -225,7 +233,7 @@ impl Fp12 {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ),
         inline(always)
     )]
@@ -238,7 +246,7 @@ impl Fp12 {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         let c1 = c1
             * Fp6::from(Fp2 {
@@ -292,7 +300,7 @@ impl Fp12 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn frobenius_map_inp(&mut self) {
@@ -350,7 +358,7 @@ impl Fp12 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {

@@ -49,7 +49,14 @@ impl MillerLoopResult {
         #[must_use]
         fn fp4_square(a: Fp2, b: Fp2) -> (Fp2, Fp2) {
             cfg_if::cfg_if! {
-                if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+                if #[cfg(all(
+                    target_os = "zkvm",
+                    any(
+                        target_vendor = "succinct",
+                        target_vendor = "zkm",
+                        all(target_vendor = "risc0", feature = "zkvm-pico"),
+                    )
+                ))] {
                     // c0 = b.square().mul_by_nonresidue() + a.square()
                     // c1 = (a + b).square() - a.square() - b.square()
                     let mut t0 = a;
@@ -101,7 +108,15 @@ impl MillerLoopResult {
 
             // For A
             cfg_if::cfg_if! {
-                if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+                if #[cfg(all(
+                        target_os = "zkvm",
+                        any(
+                            target_vendor = "succinct",
+                            target_vendor = "zkm",
+                            all(target_vendor = "risc0", feature = "zkvm-pico"),
+                        )
+                    ))]
+                {
                     z0 = -z0;
                     z0.add_inp(&t0);
                     z0.double_inp();
@@ -120,7 +135,15 @@ impl MillerLoopResult {
             }
 
             cfg_if::cfg_if! {
-                if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+                if #[cfg(all(
+                        target_os = "zkvm",
+                        any(
+                            target_vendor = "succinct",
+                            target_vendor = "zkm",
+                            all(target_vendor = "risc0", feature = "zkvm-pico"),
+                        )
+                    ))]
+                {
                     let (t0, t1) = fp4_square(z2, z3);
                     let (t2, mut t3) = fp4_square(z4, z5);
                 } else {
@@ -131,7 +154,14 @@ impl MillerLoopResult {
 
             // For C
             cfg_if::cfg_if! {
-                if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm")))] {
+                if #[cfg(all(
+                        target_os = "zkvm",
+                        any(
+                            target_vendor = "succinct",
+                            target_vendor = "zkm"
+                        )
+                    ))]
+                {
                     z4 = -z4;
                     z4.add_inp(&t0);
                     z4.double_inp();
@@ -151,7 +181,15 @@ impl MillerLoopResult {
 
             // For B
             cfg_if::cfg_if! {
-                if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+                if #[cfg(all(
+                    target_os = "zkvm",
+                    any(
+                        target_vendor = "succinct",
+                        target_vendor = "zkm",
+                        all(target_vendor = "risc0", feature = "zkvm-pico"),
+                    )
+                ))]
+                {
                     t3.mul_by_nonresidue_inp();
                     z2.add_inp(&t3);
                     z2.double_inp();
@@ -189,7 +227,7 @@ impl MillerLoopResult {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         fn cyclotomic_square_inp(f: &mut Fp12) {
@@ -244,7 +282,14 @@ impl MillerLoopResult {
             for i in (0..64).rev().map(|b| ((x >> b) & 1) == 1) {
                 if found_one {
                     cfg_if::cfg_if! {
-                        if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", feature = "zkvm-pico")))] {
+                        if #[cfg(all(
+                            target_os = "zkvm",
+                            any(
+                                target_vendor = "succinct",
+                                all(target_vendor = "risc0", feature = "zkvm-pico"),
+                            )
+                        ))]
+                        {
                             cyclotomic_square_inp(&mut tmp);
                         } else {
                             tmp = cyclotomic_square(tmp);
@@ -256,7 +301,15 @@ impl MillerLoopResult {
 
                 if i {
                     cfg_if::cfg_if! {
-                        if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+                        if #[cfg(all(
+                            target_os = "zkvm",
+                            any(
+                                target_vendor = "succinct",
+                                target_vendor = "zkm",
+                                all(target_vendor = "risc0", feature = "zkvm-pico"),
+                            )
+                        ))]
+                        {
                             tmp.mul_inp(f);
                         } else {
                             tmp *= f;
@@ -269,7 +322,15 @@ impl MillerLoopResult {
         }
 
         cfg_if::cfg_if! {
-            if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+            if #[cfg(all(
+                target_os = "zkvm",
+                any(
+                    target_vendor = "succinct",
+                    target_vendor = "zkm",
+                    all(target_vendor = "risc0", feature = "zkvm-pico"),
+                )
+            ))]
+            {
                 let mut t0 = self.0;
                 t0.frobenius_map_inp();
                 t0.frobenius_map_inp();
@@ -561,7 +622,7 @@ impl Group for Gt {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     fn generator() -> Self {
@@ -1036,7 +1097,7 @@ fn ell(f: &Fp12, coeffs: &(Fp2, Fp2, Fp2), p: &G1Affine) -> Fp12 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     {
@@ -1095,7 +1156,7 @@ fn doubling_step(r: &mut G2Projective) -> (Fp2, Fp2, Fp2) {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     {
@@ -1196,7 +1257,7 @@ fn addition_step(r: &mut G2Projective, q: &G2Affine) -> (Fp2, Fp2, Fp2) {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     {

@@ -111,7 +111,7 @@ const MODULUS: Scalar = Scalar([
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     )
 ))]
@@ -131,7 +131,7 @@ const MODULUS_LIMBS_32: [u32; 8] = [
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const R_INV: [u32; 8] = [
@@ -154,7 +154,7 @@ const MODULUS_BITS: u32 = 255;
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const GENERATOR: Scalar = Scalar([
@@ -245,7 +245,7 @@ const R2: Scalar = Scalar([
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const R3: Scalar = Scalar([
@@ -261,7 +261,7 @@ const R3: Scalar = Scalar([
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const TWO_INV: Scalar = Scalar([
@@ -294,7 +294,7 @@ const S: u32 = 32;
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const ROOT_OF_UNITY: Scalar = Scalar([
@@ -318,7 +318,7 @@ const ROOT_OF_UNITY: Scalar = Scalar([
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 const ROOT_OF_UNITY_INV: Scalar = Scalar([
@@ -386,7 +386,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         return R;
@@ -431,7 +431,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -451,7 +451,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         let tmp = Scalar::montgomery_reduce(self.0[0], self.0[1], self.0[2], self.0[3], 0, 0, 0, 0);
@@ -505,7 +505,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         return d0 * R2 + d1 * R3;
@@ -835,7 +835,7 @@ impl Scalar {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub(crate) fn mul_r_inv_internal(&mut self) {
@@ -853,7 +853,14 @@ impl Scalar {
     #[inline]
     pub fn mul_inp(&mut self, rhs: &Scalar) {
         cfg_if! {
-            if #[cfg(all(target_os = "zkvm", any(target_vendor = "succinct", target_vendor = "zkm", feature = "zkvm-pico")))] {
+            if #[cfg(all(
+                target_os = "zkvm",
+                any(
+                    target_vendor = "succinct",
+                    target_vendor = "zkm",
+                    all(target_vendor = "risc0", feature = "zkvm-pico"),
+                )
+            ))] {
                 unsafe {
                     sys_bigint(
                         self.0.as_mut_ptr() as *mut[u32; 8],
@@ -919,7 +926,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -955,7 +962,7 @@ impl Scalar {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {

@@ -210,7 +210,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn mul_by_nonresidue_inp(&mut self) {
@@ -285,7 +285,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub(crate) fn mul_r_inv_internal(&mut self) {
@@ -299,7 +299,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn square_inp(&mut self) {
@@ -362,7 +362,7 @@ impl Fp2 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -384,7 +384,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn mul_inp(&mut self, rhs: &Fp2) {
@@ -443,7 +443,7 @@ impl Fp2 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -465,7 +465,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn add_inp(&mut self, rhs: &Fp2) {
@@ -483,7 +483,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn double_inp(&mut self) {
@@ -530,7 +530,7 @@ impl Fp2 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -551,7 +551,7 @@ impl Fp2 {
         any(
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         )
     ))]
     pub fn sub_inp(&mut self, rhs: &Fp2) {
@@ -597,7 +597,7 @@ impl Fp2 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -641,7 +641,7 @@ impl Fp2 {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {

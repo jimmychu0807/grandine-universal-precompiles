@@ -178,7 +178,7 @@ impl_binops_additive_specify_output!(G2Affine, G2Projective, G2Projective);
     not(target_os = "zkvm"),
     target_vendor = "succinct",
     target_vendor = "zkm",
-    feature = "zkvm-pico"
+    all(target_vendor = "risc0", feature = "zkvm-pico"),
 ))]
 const B: Fp2 = Fp2 {
     c0: Fp::from_raw_unchecked([
@@ -223,7 +223,7 @@ const B: Fp2 = Fp2 {
     not(target_os = "zkvm"),
     target_vendor = "succinct",
     target_vendor = "zkm",
-    feature = "zkvm-pico"
+    all(target_vendor = "risc0", feature = "zkvm-pico"),
 ))]
 const B3: Fp2 = Fp2 {
     c0: Fp::from_raw_unchecked([
@@ -322,7 +322,11 @@ impl G2Affine {
             infinity: Choice::from(0u8),
         };
 
-        #[cfg(all(target_os = "zkvm", target_vendor = "risc0"))]
+        #[cfg(all(
+            target_os = "zkvm",
+            target_vendor = "risc0",
+            any(feature = "zkvm-pico", feature = "zkvm-risc0"),
+        ))]
         return G2Affine {
             x: Fp2 {
                 c0: Fp::from_raw_unchecked([
@@ -772,7 +776,7 @@ fn mul_by_3b(x: &Fp2) -> Fp2 {
     any(
         target_vendor = "succinct",
         target_vendor = "zkm",
-        feature = "zkvm-pico"
+        all(target_vendor = "risc0", feature = "zkvm-pico"),
     )
 ))]
 fn mul_by_3b_inp(x: &mut Fp2) {
@@ -796,7 +800,7 @@ impl G2Projective {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         return G2Projective {
             x: Fp2 {
@@ -922,7 +926,7 @@ impl G2Projective {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -1015,7 +1019,7 @@ impl G2Projective {
             any(
                 target_vendor = "succinct",
                 target_vendor = "zkm",
-                feature = "zkvm-pico"
+                all(target_vendor = "risc0", feature = "zkvm-pico"),
             )
         ))]
         {
@@ -1144,7 +1148,7 @@ impl G2Projective {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         {
             // 1 / ((u+1) ^ ((q-1)/3))
@@ -1240,7 +1244,7 @@ impl G2Projective {
             not(target_os = "zkvm"),
             target_vendor = "succinct",
             target_vendor = "zkm",
-            feature = "zkvm-pico"
+            all(target_vendor = "risc0", feature = "zkvm-pico"),
         ))]
         let psi2_coeff_x = Fp2 {
             c0: Fp::from_raw_unchecked([
